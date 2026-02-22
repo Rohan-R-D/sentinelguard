@@ -1,0 +1,38 @@
+services:
+  # Backend Service
+  - type: web
+    name: sentinelguard-backend
+    runtime: python
+    plan: free
+    rootDir: backend
+    buildCommand: pip install -r ../requirements.txt
+    startCommand: python -m uvicorn main:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: PORT
+        value: 10000
+      - key: MONAD_RPC_URL
+        sync: false
+      - key: PRIVATE_KEY
+        sync: false
+      - key: ETHERSCAN_API_KEY
+        sync: false
+      - key: PINATA_API_KEY
+        sync: false
+      - key: PINATA_SECRET_KEY
+        sync: false
+
+  # Frontend Service
+  - type: web
+    name: sentinelguard-frontend
+    runtime: node
+    plan: free
+    rootDir: frontend
+    buildCommand: npm run build
+    startCommand: npm start
+    envVars:
+      - key: NEXT_PUBLIC_MONAD_RPC
+        value: https://testnet-rpc.monad.xyz
+      - key: NEXT_PUBLIC_BACKEND_URL
+        value: https://sentinelguard-backend.onrender.com
+    domains:
+      - sentinelguard.onrender.com
