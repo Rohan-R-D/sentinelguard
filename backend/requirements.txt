@@ -1,0 +1,10 @@
+fastapi
+uvicorn
+web3
+pydantic
+requests
+python-dotenv
+slither-analyzer
+uvicorn[standard]==0.30.0
+web3==6.16.0
+requests==2.32.3
